@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>아이템 레벨 계산기</title>
+  <link rel="icon" href="https://lh3.googleusercontent.com/d/1r51_in8C0TKK-OqfrFtSfWw7kyHIO0z1" type="image/png" />
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 10px;
+      max-width: 500px;
+      margin: auto;
+      background-image: url('https://lh3.googleusercontent.com/d/1QsLDDAKaZl-oUm9VPp8sIFFZ1afxss_1');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #fff;
+    }
+
+    h2 {
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 8px;
+      border-radius: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 6px;
+      font-size: 14px;
+      text-align: center;
+      color: #fff;
+    }
+
+    td:first-child, th:first-child {
+      min-width: 60px;
+    }
+td:last-child,
+th:last-child {
+  min-width: 60px;
+}
+    input[type="number"] {
+      width: 100%;
+      padding: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    #result {
+      font-weight: bold;
+      text-align: center;
+      margin-top: 15px;
+      font-size: 16px;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 8px;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 480px) {
+      th, td {
+        font-size: 13px;
+        padding: 4px;
+      }
+
+      input[type="number"] {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>아이템 레벨 계산기</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>부위</th>
+        <th>강화</th>
+        <th>상재</th>
+        <th>개별 템렙</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>투구 👑</td>
+        <td><input type="number" id="helmetEnh" oninput="calculate()" /></td>
+        <td><input type="number" id="helmetMat" oninput="calculate()" /></td>
+        <td id="helmetIL">-</td>
+      </tr>
+      <tr>
+        <td>어깨 💪</td>
+        <td><input type="number" id="shoulderEnh" oninput="calculate()" /></td>
+        <td><input type="number" id="shoulderMat" oninput="calculate()" /></td>
+        <td id="shoulderIL">-</td>
+      </tr>
+      <tr>
+        <td>상의 🧥</td>
+        <td><input type="number" id="chestEnh" oninput="calculate()" /></td>
+        <td><input type="number" id="chestMat" oninput="calculate()" /></td>
+        <td id="chestIL">-</td>
+      </tr>
+      <tr>
+        <td>하의 👖</td>
+        <td><input type="number" id="pantsEnh" oninput="calculate()" /></td>
+        <td><input type="number" id="pantsMat" oninput="calculate()" /></td>
+        <td id="pantsIL">-</td>
+      </tr>
+      <tr>
+        <td>장갑 ✋</td>
+        <td><input type="number" id="glovesEnh" oninput="calculate()" /></td>
+        <td><input type="number" id="glovesMat" oninput="calculate()" /></td>
+        <td id="glovesIL">-</td>
+      </tr>
+      <tr>
+        <td>무기 ⚔️</td>
+        <td><input type="number" id="weaponEnh" oninput="calculate()" /></td>
+        <td><input type="number" id="weaponMat" oninput="calculate()" /></td>
+        <td id="weaponIL">-</td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="result">아이템 레벨: -</div>
+
+  <script>
+    function calcItemLevel(enh, mat) {
+      return 1590 + enh * 5 + mat;
+    }
+
+    function calculate() {
+      const parts = ["helmet", "shoulder", "chest", "pants", "gloves", "weapon"];
+      let total = 0;
+
+      parts.forEach((part) => {
+        const enh = parseInt(document.getElementById(part + "Enh").value) || 0;
+        const mat = parseInt(document.getElementById(part + "Mat").value) || 0;
+        const ilvl = calcItemLevel(enh, mat);
+        document.getElementById(part + "IL").innerText = ilvl;
+        total += ilvl;
+      });
+
+      const avg = (total / parts.length).toFixed(2);
+      document.getElementById("result").innerText = "아이템 레벨: " + avg;
+    }
+  </script>
+</body>
+</html>
